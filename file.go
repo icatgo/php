@@ -22,11 +22,3 @@ func FileGetBytes(path string) ([]byte, error) {
 
 	return fd, err
 }
-
-func FileMd2Html(path string) string {
-
-	contentBytes, _ := FileGetBytes(path)
-	//contentBytes = blackfriday.m(contentBytes)
-
-	return string(contentBytes)
-}
