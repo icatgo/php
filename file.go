@@ -5,20 +5,18 @@ import (
 	"os"
 )
 
-func FileGetContents(path string) (string, error) {
-
-	content, err := FileGetBytes(path)
-
+// php file_get_contents()
+func FileGetContents(filename string) (string, error) {
+	content, err := ioutil.ReadFile(filename)
 	return string(content), err
 }
 
-func FileGetBytes(path string) ([]byte, error) {
-	fi, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer fi.Close()
-	fd, err := ioutil.ReadAll(fi)
+// php file_put_contents()
+func FilePutContents(filename string, data string, mode os.FileMode) error {
+	return ioutil.WriteFile(filename, []byte(data), mode)
+}
 
-	return fd, err
+// php unlink()
+func Unlink(filename string) error {
+	return os.Remove(filename)
 }
