@@ -1,6 +1,8 @@
 package php
 
 import (
+	"bytes"
+	"html"
 	"strings"
 	"unicode"
 )
@@ -114,4 +116,74 @@ func Lcfirst(str string) string {
 // Ucwords ucwords()
 func Ucwords(str string) string {
 	return strings.Title(str)
+}
+
+// Explode explode()
+func Explode(delimiter, str string) []string {
+	return strings.Split(str, delimiter)
+}
+
+// Implode implode()
+func Implode(glue string, pieces []string) string {
+	return strings.Join(pieces, glue)
+}
+
+// Join join()
+// Join array elements with a string
+func Join(glue string, pieces []string) string {
+	return strings.Join(pieces, glue)
+}
+
+// Addslashes addslashes()
+func Addslashes(str string) string {
+	var buf bytes.Buffer
+	for _, char := range str {
+		switch char {
+		case '\'', '"', '\\':
+			buf.WriteRune('\\')
+		}
+		buf.WriteRune(char)
+	}
+	return buf.String()
+}
+
+// Stripslashes stripslashes()
+func Stripslashes(str string) string {
+	var buf bytes.Buffer
+	l, skip := len(str), false
+	for i, char := range str {
+		if skip {
+			skip = false
+		} else if char == '\\' {
+			if i+1 < l && str[i+1] == '\\' {
+				skip = true
+			}
+			continue
+		}
+		buf.WriteRune(char)
+	}
+	return buf.String()
+}
+
+// Quotemeta quotemeta()
+func Quotemeta(str string) string {
+	var buf bytes.Buffer
+	for _, char := range str {
+		switch char {
+		case '.', '+', '\\', '(', '$', ')', '[', '^', ']', '*', '?':
+			buf.WriteRune('\\')
+		}
+		buf.WriteRune(char)
+	}
+	return buf.String()
+}
+
+// Htmlentities htmlentities()
+func Htmlentities(str string) string {
+	return html.EscapeString(str)
+}
+
+// HTMLEntityDecode html_entity_decode()
+func HTMLEntityDecode(str string) string {
+	return html.UnescapeString(str)
 }
