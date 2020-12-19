@@ -8,7 +8,7 @@ func Time() int64 {
 }
 
 // Date date()
-// Date("01/04/2013 13:14:20 PM", 1520131400)
+// Date("2006-01-02", 1520131400)
 func Date(format string, timestamp int64) string {
 	return time.Unix(timestamp, 0).Format(format)
 }
