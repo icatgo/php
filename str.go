@@ -187,3 +187,18 @@ func Htmlentities(str string) string {
 func HTMLEntityDecode(str string) string {
 	return html.UnescapeString(str)
 }
+
+func Htmlspecialchars(str string) string {
+	var htmlEscaper = strings.NewReplacer(
+		`&`, "&amp;",
+		`<`, "&lt;",
+		`>`, "&gt;",
+		`"`, "&#34;", // "&#34;" is shorter than "&quot;".
+	)
+
+	return htmlEscaper.Replace(str)
+}
+
+func HtmlspecialcharsDecode(str string) string {
+	return html.UnescapeString(str)
+}
